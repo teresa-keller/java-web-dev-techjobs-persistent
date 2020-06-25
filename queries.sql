@@ -1,6 +1,11 @@
 ## Part 1: Test it with SQL
 
-select * from techjobs.job
+## table techjobs.job
+
+id int,
+employer VARCHAR(255)
+name VARCHAR(255)
+skills VARCHAR(255)
 
 ## Part 2: Test it with SQL
 
