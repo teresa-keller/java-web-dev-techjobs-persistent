@@ -2,7 +2,7 @@
 
 ## table techjobs.job
 
-id int,
+id int
 employer VARCHAR(255)
 name VARCHAR(255)
 skills VARCHAR(255)
