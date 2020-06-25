@@ -9,7 +9,6 @@ public class Skill extends AbstractEntity {
     @Size(max = 500)
     public String description;
 
-    @Size(max = 500)
     public Skill(String description) {
         this.description = description;
     }
