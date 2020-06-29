@@ -15,6 +15,7 @@ WHERE employer.location = "St. Louis City";
 
 ## Part 3: Test it with SQL
 
-DROP table techjobs.job;
+DROP table assignment4.job_skills;
+DROP table assignment4.job;
 
 ## Part 4: Test it with SQL
