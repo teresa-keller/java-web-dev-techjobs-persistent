@@ -20,7 +20,7 @@
                 <p th:text="${'Name: ' + job.name}"></p>
                 <p>
                     Employer:
-                    <a th:href="@{'/employers/view/' + ${employer.id}}" th:text="${job.employer.name}"></a>
+                    <a th:href="@{'/employers/view/' + ${job}}" th:text="${job}"></a>
                 </p>
                 <p>
                     Skills:
