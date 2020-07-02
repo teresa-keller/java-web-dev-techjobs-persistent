@@ -2,6 +2,7 @@ package org.launchcode.javawebdevtechjobspersistent.controllers;
 
 import org.launchcode.javawebdevtechjobspersistent.models.Employer;
 import org.launchcode.javawebdevtechjobspersistent.models.data.EmployerRepository;
+import org.launchcode.javawebdevtechjobspersistent.models.data.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ public class EmployerController {
 
     @Autowired
     private EmployerRepository employerRepository;
+
+    @Autowired
+    private JobRepository jobRepository;
 
     @GetMapping
     public String displayAllEmployers(Model model) {
@@ -50,10 +54,14 @@ public class EmployerController {
 
         Optional<Employer> optEmployer = employerRepository.findById(employerId);
         if (optEmployer.isPresent()) {
-            Employer employer = (Employer) optEmployer.get();
-            model.addAttribute("employer", employer);
+            model.addAttribute("title", "Jobs listed by: " + optEmployer.get().getName());
+            model.addAttribute("employer", employerRepository.findById(employerId));
+            model.addAttribute("jobs", jobRepository.findAll());
             return "employers/view";
         } else {
+            model.addAttribute("title", "All Employers");
+            model.addAttribute(employerRepository.findAll());
+
             return "redirect:../";
         }
     }
