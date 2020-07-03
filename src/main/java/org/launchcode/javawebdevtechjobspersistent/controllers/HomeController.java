@@ -59,22 +59,28 @@ public class HomeController {
         }
 
         jobRepository.save(newJob);
-        model.addAttribute("employerId", jobRepository.findById(employerId));
+        model.addAttribute("employers", jobRepository.findById(employerId));
         return "redirect:";
     }
 
     @GetMapping("view/{jobId}")
-    public String displayViewJob(Model model, Job newJob, @PathVariable int jobId) {
+    public String displayViewJob(Model model, Job newJob, @PathVariable Integer jobId) {
 
-        Optional<Job> optJob = jobRepository.findById(jobId);
-        if (optJob.isEmpty()) {
+        if (jobId == null) {
             model.addAttribute("title", "All Jobs");
             model.addAttribute("jobs", jobRepository.findAll());
         } else {
+            Optional<Job> optJob = jobRepository.findById(jobId);
+
             if (optJob.isPresent()) {
-                model.addAttribute("title", "View Job" + optJob.get().getName());
+                model.addAttribute("title", "Job: " + optJob.get().getName());
+            } else {
+                model.addAttribute("title", "Job: " + jobId);
             }
+            model.addAttribute("jobs", optJob.get().getClass());
         }
+
+
         return "view";
     }
 }

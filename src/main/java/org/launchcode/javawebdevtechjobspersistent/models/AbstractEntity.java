@@ -12,13 +12,13 @@ public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @NotBlank(message = "Please enter a name.")
     @Size(max = 100)
     private String name;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
