@@ -10,8 +10,8 @@
 
 <div class="container body-content">
     <h2>Employers</h2>
-    <ul>
-        <li th:each="employer : ${employers}">
+    <ul th:each="employer : ${employers}">
+        <li>
             <a th:href="@{'/employers/view/' + ${employer.id}}" th:text="${employer.name}"></a>
         </li>
     </ul>
