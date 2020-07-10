@@ -24,7 +24,7 @@ public class EmployerController {
 
     @GetMapping
     public String displayAllEmployers(Model model) {
-        model.addAttribute("title", "All Employers");
+        model.addAttribute("name", "All Employers");
         model.addAttribute("employers", employerRepository.findAll());
         return "employers/index";
     }
@@ -50,21 +50,20 @@ public class EmployerController {
     }
 
     @GetMapping("view/{employerId}")
-    public String displayViewEmployer(Model model, @PathVariable Integer employerId) {
+    public String displayViewEmployer(Model model, @PathVariable int employerId) {
 
-        if (employerId == null) {
-            model.addAttribute("title", "All Employers");
-            model.addAttribute("employers", employerRepository.findAll());
+        if (employerId == 0) {
+            model.addAttribute("employer", employerRepository.findAll());
         } else {
-            Optional<Employer> optEmployer = employerRepository.findById(employerId);
+            Optional<Employer> optEmployer;
+            optEmployer = employerRepository.findById(employerId);
 
             if(optEmployer.isPresent()) {
-                model.addAttribute("title", "Employer: " + optEmployer.get().getName());
-            } else {
-                model.addAttribute("title", optEmployer.get().getId());
+                model.addAttribute("name", "Employer: " + optEmployer.get().getName());
             }
-            model.addAttribute("employers", optEmployer.get().getJobs());
+            model.addAttribute("employer", optEmployer.get());
 
+            return "employers/view";
         }
         return "redirect:../";
     }

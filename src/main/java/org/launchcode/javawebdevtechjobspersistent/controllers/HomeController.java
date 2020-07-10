@@ -51,7 +51,7 @@ public class HomeController {
 
     @PostMapping("add")
     public String processAddJobForm(@ModelAttribute @Valid Job newJob, Employer newEmployer,
-                                       Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
+                                    Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Job");
@@ -59,28 +59,27 @@ public class HomeController {
         }
 
         jobRepository.save(newJob);
-        model.addAttribute("employers", jobRepository.findById(employerId));
+        model.addAttribute("employers", employerRepository.findById(employerId));
+        model.addAttribute("skills", skills);
         return "redirect:";
     }
 
     @GetMapping("view/{jobId}")
-    public String displayViewJob(Model model, Job newJob, @PathVariable Integer jobId) {
+    public String displayViewJob(Model model, @PathVariable int jobId) {
+        model.addAttribute("job", jobRepository.findAll());
+       if (jobId == 0) {
+           model.addAttribute("job", jobRepository.findAll());
+       } else {
+           Optional<Job> optJob;
+           optJob = jobRepository.findById(jobId);
 
-        if (jobId == null) {
-            model.addAttribute("title", "All Jobs");
-            model.addAttribute("jobs", jobRepository.findAll());
-        } else {
-            Optional<Job> optJob = jobRepository.findById(jobId);
+           if (optJob.isPresent()) {
+               model.addAttribute("name", "Job: " + optJob.get().getName());
+           }
+           model.addAttribute("job", optJob.get());
 
-            if (optJob.isPresent()) {
-                model.addAttribute("title", "Job: " + optJob.get().getName());
-            } else {
-                model.addAttribute("title", "Job: " + jobId);
-            }
-            model.addAttribute("jobs", optJob.get().getClass());
-        }
-
-
-        return "view";
+           return "view";
+       }
+       return "redirect:";
     }
 }
