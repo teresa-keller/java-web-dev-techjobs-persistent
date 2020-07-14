@@ -59,7 +59,7 @@ public class HomeController {
         }
 
         jobRepository.save(newJob);
-        model.addAttribute("employers", employerRepository.findById(employerId));
+        model.addAttribute("employers", employerId);
         model.addAttribute("skills", skills);
         return "redirect:";
     }
@@ -72,11 +72,15 @@ public class HomeController {
        } else {
            Optional<Job> optJob;
            optJob = jobRepository.findById(jobId);
+           Employer employer = new Employer();
+           employerRepository.save(employer);
 
            if (optJob.isPresent()) {
-               model.addAttribute("name", "Job: " + optJob.get().getName());
+               model.addAttribute("title", "Job: " + optJob.get().getName());
+               model.addAttribute("employer", optJob.get().getEmployer());
            }
            model.addAttribute("job", optJob.get());
+           model.addAttribute("employer", optJob.get().getEmployer());
 
            return "view";
        }
