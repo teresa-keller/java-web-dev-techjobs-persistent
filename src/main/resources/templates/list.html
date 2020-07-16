@@ -25,7 +25,7 @@
             </li>
         </td>
         <td>
-            <li>
+            <li th:each="employer : ${employers}">
                 <a th:href="@{/list/jobs(column=employer,value=${employer.name})}" th:text="${employer.name}"></a>
             </li>
         </td>
