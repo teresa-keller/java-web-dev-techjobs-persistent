@@ -58,9 +58,12 @@ public class HomeController {
             return "add";
         }
 
-        jobRepository.save(newJob);
+        newEmployer = employerRepository.findById(employerId).orElse(new Employer());
+        newJob.setEmployer(newEmployer);
         model.addAttribute("employers", employerId);
         model.addAttribute("skills", skills);
+        jobRepository.save(newJob);
+
         return "redirect:";
     }
 
@@ -72,8 +75,6 @@ public class HomeController {
        } else {
            Optional<Job> optJob;
            optJob = jobRepository.findById(jobId);
-           Employer employer = new Employer();
-           employerRepository.save(employer);
 
            if (optJob.isPresent()) {
                model.addAttribute("title", "Job: " + optJob.get().getName());
